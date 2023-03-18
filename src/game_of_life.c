@@ -12,11 +12,15 @@ void swap(int a[HEIGHT][WIDTH], int b[HEIGHT][WIDTH]);
 int main() {
     int current_array[HEIGHT][WIDTH] = {{current_array[0][0] = 0}};
     int new_array[HEIGHT][WIDTH] = {{new_array[0][0] = 0}};
-    current_array[2][1] = 1;
-    current_array[3][2] = 1;
-    current_array[1][3] = 1;
-    current_array[2][3] = 1;
-    current_array[3][3] = 1;
+
+    FILE *file = fopen("HEART.txt", "r");
+    for (int i = 0; i < HEIGHT; i++) {
+        for (int j = 0; j < WIDTH; j++) {
+            fgetc(file, "%d", current_array[i][j]);
+        }
+    }
+    fclose(file);
+    
     int flag = 0;
     char tap;
 
