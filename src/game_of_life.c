@@ -12,15 +12,23 @@ void swap(int a[HEIGHT][WIDTH], int b[HEIGHT][WIDTH]);
 int main() {
     int current_array[HEIGHT][WIDTH] = {{current_array[0][0] = 0}};
     int new_array[HEIGHT][WIDTH] = {{new_array[0][0] = 0}};
+    current_array[2][1] = 1;
+    current_array[3][2] = 1;
+    current_array[1][3] = 1;
     current_array[2][3] = 1;
     current_array[3][3] = 1;
-    current_array[4][3] = 1;
     int flag = 0;
+    char tap;
 
     while(flag == 0) {
         view (current_array, &flag);
-        make_new(current_array, new_array);
-        swap(current_array, new_array);
+        scanf("%c", &tap);
+        if (tap == '\n') {
+            make_new(current_array, new_array);
+            swap(current_array, new_array);
+        } else {
+            flag = 1;
+        }
     }
     printf("Game over!");
 }
