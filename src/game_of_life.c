@@ -12,7 +12,9 @@ void swap(int a[HEIGHT][WIDTH], int b[HEIGHT][WIDTH]);
 int main() {
     int current_array[HEIGHT][WIDTH] = {{current_array[0][0] = 0}};
     int new_array[HEIGHT][WIDTH] = {{new_array[0][0] = 0}};
-    current_array[0][0] = 1;
+    current_array[2][3] = 1;
+    current_array[3][3] = 1;
+    current_array[4][3] = 1;
     int flag = 0;
 
     while(flag == 0) {
@@ -83,6 +85,9 @@ void make_new(int a[HEIGHT][WIDTH], int b[HEIGHT][WIDTH]) {
             } else {
                 if (neighbor < 2 || neighbor > 3) {
                     b[i][j] = 0;
+                }
+                if (neighbor == 2 || neighbor == 3) {
+                    b[i][j] = 1;
                 }
             }
         }
