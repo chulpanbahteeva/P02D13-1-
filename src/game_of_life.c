@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <ncurses.h>
+#include <unistd.h>
 
 #define WIDTH 80
 #define HEIGHT 25
@@ -16,28 +16,19 @@ int main() {
     int current_array[HEIGHT][WIDTH] = {{current_array[0][0] = 0}};
     int new_array[HEIGHT][WIDTH] = {{new_array[0][0] = 0}};
     int flag = 0;
-
+    rewind(stdin);
     read_file(current_array, &flag);
-    initscr();
     int seed = speed(&flag);
-    halfdelay (seed);
-    endwin();
-
     while (flag == 0) {
-        //scanf("%c", &tap);
-        //if (tap == '\n') {
+        if (99999 < seed && seed < 5000001) {
             view(current_array, &flag);
-            int tr = getch();
-	        switch(tr) {
-                case ERR: 
-                    make_new(current_array, new_array);
-                    swap(current_array, new_array);
-	                break;
-                default:
-                    flag = 1;
-            }
-        //} else {
-            //flag = 1;
+            usleep(seed);
+            make_new(current_array, new_array);
+            swap(current_array, new_array);
+        } else {
+            flag = 1;
+            break;
+        }
     }
     return 0;
 }
@@ -52,18 +43,18 @@ void read_file(int a[HEIGHT][WIDTH], int *flag) {
         *flag = 1;
     } else {
         if (figure == 1) {
-            file = fopen("GLIDER.txt", "r");
+            file = fopen("razmnozhitel.txt", "r");
         } else if (figure == 2) {
             file = fopen("HEART.txt", "r");
         } else if (figure == 3) {
-            file = fopen("DIAMOND.txt", "r");
+            file = fopen("dolgozhitel.txt", "r");
         } else if (figure == 4) {
-            file = fopen("LETTER.txt", "r");
+            file = fopen("parovoz.txt", "r");
         } else if (figure == 5) {
-            file = fopen("CUSTOM.txt", "r");
+            file = fopen("gospers_gun.txt", "r");
         }
     }
- 
+
     if (file == NULL) {
         printf("Файл не найден\n");
         *flag = 1;
@@ -105,8 +96,8 @@ void view(int a[HEIGHT][WIDTH], int *flag) {
 
 int neighbors(int a[HEIGHT][WIDTH], int x, int y) {
     int count = 0;
-    int string = 0;
-    int column = 0;
+    int string;
+    int column;
     for (int i = y - 1; i <= y + 1; i++) {
         for (int j = x - 1; j <= x + 1; j++) {
             if (i < 0) {
@@ -133,7 +124,7 @@ int neighbors(int a[HEIGHT][WIDTH], int x, int y) {
 }
 
 void make_new(int a[HEIGHT][WIDTH], int b[HEIGHT][WIDTH]) {
-    int neighbor = 0;
+    int neighbor;
     for (int i = 0; i < HEIGHT; i++) {
         for (int j = 0; j < WIDTH; j++) {
             neighbor = neighbors(a, j, i);
@@ -164,19 +155,19 @@ void swap(int a[HEIGHT][WIDTH], int b[HEIGHT][WIDTH]) {
 int speed(int *flag) {
     int res;
     int score;
-    printw("Enter a speed from 1 to 5: ");
-    scanw("%d", &score);
+    printf("Enter a speed from 1 to 5: ");
+    scanf("%d", &score);
     if (score == 5) {
-	res = 1;
+        res = 100000;
     } else if (score == 4) {
-	res = 5;
+        res = 500000;
     } else if (score == 3) {
-	res = 10;
+        res = 1000000;
     } else if (score == 2) {
-	res = 25;
+        res = 2500000;
     } else if (score == 1) {
-	res = 50;
+        res = 5000000;
     } else
-	*flag = 1;
+        *flag = 1;
     return res;
 }
