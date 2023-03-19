@@ -39,7 +39,8 @@ void read_file(int a[HEIGHT][WIDTH], int *flag) {
     int figure = 1;
     printf("Выбери начальную инициализацию (от 1 до 5): ");
     int b = scanf("%d", &figure);
-    FILE *file = NULL;
+    FILE *file = fopen("1.txt", "r");
+    fclose(file);
     if (b != 1) {
         printf("Вводи целое число от 1 до 5!:)\n");
         *flag = 1;
@@ -73,8 +74,8 @@ void read_file(int a[HEIGHT][WIDTH], int *flag) {
                 cnt += 1;
             }
         }
+        fclose(file);
     }
-    fclose(file);
 }
 
 void view(int a[HEIGHT][WIDTH], int *flag) {
