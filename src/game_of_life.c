@@ -19,12 +19,14 @@ int main() {
     rewind(stdin);
     read_file(current_array, &flag);
     int seed = speed(&flag);
+    int cnt = 0;
     while (flag == 0) {
-        if (99999 < seed && seed < 5000001) {
+        if (9999 < seed && seed < 500001 && cnt < 1000) {
             view(current_array, &flag);
             usleep(seed);
             make_new(current_array, new_array);
             swap(current_array, new_array);
+            cnt++;
         } else {
             flag = 1;
             break;
@@ -158,15 +160,15 @@ int speed(int *flag) {
     printf("Enter a speed from 1 to 5: ");
     scanf("%d", &score);
     if (score == 5) {
-        res = 100000;
+        res = 10000;
     } else if (score == 4) {
-        res = 500000;
+        res = 50000;
     } else if (score == 3) {
-        res = 1000000;
+        res = 100000;
     } else if (score == 2) {
-        res = 2500000;
+        res = 250000;
     } else if (score == 1) {
-        res = 5000000;
+        res = 500000;
     } else
         *flag = 1;
     return res;
