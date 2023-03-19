@@ -4,6 +4,7 @@
 #define WIDTH 80 
 #define HEIGHT 25
 
+void read_file(int a[HEIGHT][WIDTH], int *flag);
 void view(int a[HEIGHT][WIDTH], int *flag);
 int neighbors(int a[HEIGHT][WIDTH], int x, int y);
 void make_new(int a[HEIGHT][WIDTH], int b[HEIGHT][WIDTH]);
@@ -12,18 +13,10 @@ void swap(int a[HEIGHT][WIDTH], int b[HEIGHT][WIDTH]);
 int main() {
     int current_array[HEIGHT][WIDTH] = {{current_array[0][0] = 0}};
     int new_array[HEIGHT][WIDTH] = {{new_array[0][0] = 0}};
-
-    FILE *file = fopen("HEART.txt", "r");
-    for (int i = 0; i < HEIGHT; i++) {
-        for (int j = 0; j < WIDTH; j++) {
-            fgetc(file, "%d", current_array[i][j]);
-        }
-    }
-    fclose(file);
-    
     int flag = 0;
     char tap;
 
+    read_file(current_array, &flag);
     while(flag == 0) {
         view (current_array, &flag);
         scanf("%c", &tap);
@@ -35,6 +28,29 @@ int main() {
         }
     }
     printf("Game over!");
+    return 0;
+}
+
+void read_file(int a[HEIGHT][WIDTH], int *flag) {
+    FILE *file = fopen("HEART.txt", "r");
+    char c;
+    int cnt = 0;
+    if (file == NULL) {
+        printf("Cannot open file");
+        *flag = 1;
+    } else {
+        while ((c = getc(file)) != EOF){
+            if (c == '0') {
+                a[cnt / WIDTH][cnt % WIDTH] = 0;
+                cnt +=1;
+            }
+            if (c == '1') {
+                a[cnt / WIDTH][cnt % WIDTH] = 1;
+                cnt +=1;
+            }
+        }                
+    }
+    fclose(file);
 }
 
 void view(int a[HEIGHT][WIDTH], int *flag) {
