@@ -21,7 +21,8 @@ int main() {
     initscr();
     int seed = speed(&flag);
     halfdelay (seed);
-    
+    endwin();
+
     while (flag == 0) {
         //scanf("%c", &tap);
         //if (tap == '\n') {
@@ -38,7 +39,6 @@ int main() {
         //} else {
             //flag = 1;
     }
-    endwin();
     return 0;
 }
 
