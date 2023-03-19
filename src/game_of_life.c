@@ -15,28 +15,48 @@ int main() {
     int new_array[HEIGHT][WIDTH] = {{new_array[0][0] = 0}};
     int flag = 0;
     char tap;
-
+    
     read_file(current_array, &flag);
     while(flag == 0) {
-        view (current_array, &flag);
         scanf("%c", &tap);
         if (tap == '\n') {
+            view (current_array, &flag);
             make_new(current_array, new_array);
             swap(current_array, new_array);
         } else {
             flag = 1;
         }
     }
-    printf("Game over!");
+    printf("Игра закончена!");
     return 0;
 }
 
 void read_file(int a[HEIGHT][WIDTH], int *flag) {
-    FILE *file = fopen("HEART.txt", "r");
+    int figure = 1;
+    printf("Выбери начальную инициализацию(от 1 до 5): ");
+    int b = scanf("%d", &figure);
+    FILE *file = NULL;
+    if (b != 1) {
+        printf("Вводи целое число от 1 до 5!:)\n");
+        *flag = 1;
+    } else {
+       if (figure == 1) {
+            file = fopen("GLIDER.txt", "r");
+        } else if (figure == 2) {
+            file = fopen("HEART.txt", "r");
+        } else if (figure == 3) {
+            file = fopen("DIAMOND.txt", "r");
+        } else if (figure == 4) {
+            file = fopen("LETTER.txt", "r");
+        } else if (figure == 5) {
+            file = fopen("CUSTOM.txt", "r");
+        } 
+    }
+
     char c;
     int cnt = 0;
     if (file == NULL) {
-        printf("Cannot open file");
+        printf("Файл не найден\n");
         *flag = 1;
     } else {
         while ((c = getc(file)) != EOF){
